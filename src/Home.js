@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
-import './App.css';
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
+import './Home.css';
+import { Button, FormControl, Input, InputLabel, GridList, Grid } from '@material-ui/core';
 import Todo from './Todo.js';
 import db from './firebase';
 import { firebaseApp, logOut } from './firebase';
@@ -33,32 +33,37 @@ import firebase from 'firebase';
 
         return (
             <div className="Home">
-            <h1>To-Do</h1>
-            <Button onClick={ logOut } >
-                Log Out
-            </Button>
+                <Grid container justify='center' alignItems='center'>
+                    <Grid item>
+                        <h1>To-Do</h1>
+                        <Button onClick={ logOut } color='primary'>
+                            Log Out
+                        </Button>
+                    </Grid>
+                </Grid>
+                
 
-            <form>
-                <FormControl>
-                <InputLabel>Write a To-Do</InputLabel>
-                <Input value={input} onChange={event => setInput(event.target.value)}/>
-                </FormControl>
+                <form>
+                    <FormControl>
+                        <InputLabel>Write a To-Do</InputLabel>
+                        <Input value={input} onChange={event => setInput(event.target.value)}/>
+                    </FormControl>
 
-                <FormControl>
-                <InputLabel></InputLabel>
-                <Input type='datetime-local' onChange={event => setTime(event.target.value)} />
-                </FormControl>
+                    <FormControl>
+                        <InputLabel></InputLabel>
+                        <Input type='date' onChange={event => setTime(event.target.value)} />
+                    </FormControl>
 
-                <Button color='primary' disabled={!input} type='submit' onClick={addTodo}>
-                Add Todo
-                </Button>
-            </form>
+                    <Button color='primary' disabled={!input} type='submit' onClick={addTodo}>
+                        Add Todo
+                    </Button>
+                </form>
 
-            <ul>
-                {todos.map(todo => (
-                <Todo todo={todo} />
-                ))}
-            </ul>
+                <ul>
+                    {todos.map(todo => (
+                    <Todo todo={todo} />
+                    ))}
+                </ul>
             </div>
         );
     }
