@@ -1,63 +1,48 @@
-import React, { useState, useEffect} from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core';
-import Todo from './Todo.js';
-import db from './firebase';
-import firebase from 'firebase';
+import { firebaseApp } from './firebase';
+import Home from './Home';
+import Login from './Login';
 
-
-function App() {
-
-  const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState('');
-  const [time, setTime] = useState('');
-
-  useEffect(() => {
-    db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-      setTodos(snapshot.docs.map(doc => ({id: doc.id, text: doc.data().text, deadline: doc.data().deadline})))
-    })
-  }, []);
-
-  const addTodo = (event) => {
-    event.preventDefault();
-
-    db.collection('todos').add({
-      text: input,
-      deadline: time,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+class App extends Component {
+  constructor() {
+    super();
+    this.state = ({
+      user: null,
     });
-
-    setTodos([...todos, input]);
-    setInput('');
+    this.authListener = this.authListener.bind(this);
   }
 
-  return (
-    <div className="App">
-      <h1>To-Do</h1>
+  componentDidMount() {
+    this.authListener();
+  }
 
-      <form>
-        <FormControl>
-          <InputLabel>Write a To-Do</InputLabel>
-          <Input value={input} onChange={event => setInput(event.target.value)}/>
-        </FormControl>
-
-        <FormControl>
-          <InputLabel></InputLabel>
-          <Input type='datetime-local' onChange={event => setTime(event.target.value)} />
-        </FormControl>
-
-        <Button color='primary' disabled={!input} type='submit' onClick={addTodo}>
-          Add Todo
-        </Button>
-      </form>
-
-      <ul>
-        {todos.map(todo => (
-          <Todo todo={todo} />
-        ))}
-      </ul>
-    </div>
-  );
+  authListener() {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        this.setState({ user });
+        localStorage.setItem('user', user.uid);
+      } else {
+        this.setState({ user: null });
+        localStorage.removeItem('user');
+      }
+    });
+  }
+  render() {
+    return (
+     <div>
+      {this.state.user ? 
+        (
+        <Home />
+        ) :
+        (
+        <Login />
+        )
+      }
+      </div>
+    )
+  }
 }
 
-export default App;
+ export default App;
