@@ -14,7 +14,10 @@ import firebase from 'firebase';
 
         //code modeled after https://www.youtube.com/watch?v=VqgTr-nd7Cg&ab_channel=CleverProgrammer
         useEffect(() => {
+            console.log(localStorage.getItem('user'))
             db.collection('todos').where('userId', '==', localStorage.getItem('user')).orderBy('deadline', 'asc').onSnapshot(snapshot => {
+                console.log('firebase result')
+                console.log(snapshot.docs)
                 setTodos(snapshot.docs.map(doc => ({id: doc.id, text: doc.data().text, deadline: doc.data().deadline})))
             })
         }, []);

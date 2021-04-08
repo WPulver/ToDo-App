@@ -5,17 +5,18 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 function Todo(props) {
     return (
-        <List className="todo_list">
-            <GridList container>
-                <GridList item xs='12'>
-                    <ListItem>
-                        <ListItemText primary={props.todo.text} secondary={props.todo.deadline} />
-                    </ListItem>
-                    <ListItem>
+        <List className="todo_list" >
+            {/* <GridList container cellHeight='100'> */}
+                <GridList item xs='12' cellHeight='auto'>
+                <ListItem>
                         <DeleteIcon fontSize='small' onClick={event => db.collection('todos').doc(props.todo.id).delete()} />
-                    </ListItem>
+                {/* </ListItem> */}
+                {/* <ListItem> */}
+                        <ListItemText primary={props.todo.text} secondary={props.todo.deadline} style={{marginLeft:'1em'}}/>
+                </ListItem>
+                    
                 </GridList>
-            </GridList>
+            {/* </GridList> */}
         </List>
     )
 }
