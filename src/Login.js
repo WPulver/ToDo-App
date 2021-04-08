@@ -14,6 +14,7 @@ class Login extends Component {
     };
   }
 
+
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -34,6 +35,9 @@ class Login extends Component {
         console.log(error);
       })
   }
+
+  
+
   render() {
     return (
        <div className="col-md-6">
@@ -55,4 +59,5 @@ class Login extends Component {
     );
   }
 }
+
 export default Login;

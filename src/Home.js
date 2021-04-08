@@ -5,6 +5,7 @@ import Todo from './Todo.js';
 import db from './firebase';
 import { firebaseApp, logOut } from './firebase';
 import firebase from 'firebase';
+//import { userID } from './App';
 
     function Home() {
 
@@ -13,8 +14,8 @@ import firebase from 'firebase';
         const [time, setTime] = useState('');
 
         useEffect(() => {
-            db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-            setTodos(snapshot.docs.map(doc => ({id: doc.id, text: doc.data().text, deadline: doc.data().deadline})))
+            db.collection('todos').where('userId', '==', localStorage.getItem('user')).orderBy('deadline', 'asc').onSnapshot(snapshot => {
+                setTodos(snapshot.docs.map(doc => ({id: doc.id, text: doc.data().text, deadline: doc.data().deadline})))
             })
         }, []);
 
@@ -22,10 +23,14 @@ import firebase from 'firebase';
             event.preventDefault();
 
             db.collection('todos').add({
-            text: input,
-            deadline: time,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                text: input,
+                deadline: time,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                userId: localStorage.getItem('user')
             });
+
+            console.log(localStorage.getItem('user'));
+            console.log(db.collection('todos').where('userId', '==', localStorage.getItem('user')).get());
 
             setTodos([...todos, input]);
             setInput('');
@@ -61,7 +66,7 @@ import firebase from 'firebase';
 
                 <ul>
                     {todos.map(todo => (
-                    <Todo todo={todo} />
+                        <Todo todo={todo} />
                     ))}
                 </ul>
             </div>

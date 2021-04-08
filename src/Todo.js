@@ -7,7 +7,7 @@ function Todo(props) {
     return (
         <List className="todo_list">
             <GridList container>
-                <GridList item>
+                <GridList item xs='12'>
                     <ListItem>
                         <ListItemText primary={props.todo.text} secondary={props.todo.deadline} />
                     </ListItem>
