@@ -5,7 +5,6 @@ import Todo from './Todo.js';
 import db from './firebase';
 import { firebaseApp, logOut } from './firebase';
 import firebase from 'firebase';
-//import { userID } from './App';
 
     function Home() {
 
@@ -13,6 +12,7 @@ import firebase from 'firebase';
         const [input, setInput] = useState('');
         const [time, setTime] = useState('');
 
+        //code modeled after https://www.youtube.com/watch?v=VqgTr-nd7Cg&ab_channel=CleverProgrammer
         useEffect(() => {
             db.collection('todos').where('userId', '==', localStorage.getItem('user')).orderBy('deadline', 'asc').onSnapshot(snapshot => {
                 setTodos(snapshot.docs.map(doc => ({id: doc.id, text: doc.data().text, deadline: doc.data().deadline})))

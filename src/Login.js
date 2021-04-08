@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseApp } from './firebase';
 
+//code modeled after https://www.bennettdocs.com/react-login-with-google-firebase/
 class Login extends Component {
   constructor(props) {
     super(props);
