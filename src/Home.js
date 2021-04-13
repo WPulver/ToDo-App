@@ -59,6 +59,7 @@ import firebase from 'firebase';
                     <InputLabel></InputLabel>
                     <Input type='date' onChange={event => setTime(event.target.value)} />
                 </FormControl>
+
                 <Button color='primary' disabled={!input} type='submit' onClick={addTodo}>
                     Add Todo
                 </Button>
