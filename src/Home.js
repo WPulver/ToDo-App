@@ -50,22 +50,18 @@ import firebase from 'firebase';
                     </Grid>
                 </Grid>
                 
+                <FormControl>
+                    <InputLabel>Write a To-Do</InputLabel>
+                    <Input value={input} onChange={event => setInput(event.target.value)}/>
+                </FormControl>
 
-                <form>
-                    <FormControl>
-                        <InputLabel>Write a To-Do</InputLabel>
-                        <Input value={input} onChange={event => setInput(event.target.value)}/>
-                    </FormControl>
-
-                    <FormControl>
-                        <InputLabel></InputLabel>
-                        <Input type='date' onChange={event => setTime(event.target.value)} />
-                    </FormControl>
-
-                    <Button color='primary' disabled={!input} type='submit' onClick={addTodo}>
-                        Add Todo
-                    </Button>
-                </form>
+                <FormControl>
+                    <InputLabel></InputLabel>
+                    <Input type='date' onChange={event => setTime(event.target.value)} />
+                </FormControl>
+                <Button color='primary' disabled={!input} type='submit' onClick={addTodo}>
+                    Add Todo
+                </Button>
 
                 <ul>
                     {todos.map(todo => (
